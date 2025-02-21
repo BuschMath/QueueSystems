@@ -128,20 +128,30 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ArrivalEvent.h" />
+    <ClInclude Include="Customer.h" />
     <ClInclude Include="DepartureEvent.h" />
     <ClInclude Include="Distribution.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="EventQueue.h" />
+    <ClInclude Include="EventTarget.h" />
     <ClInclude Include="ExponentialDistribution.h" />
     <ClInclude Include="MM1Queue.h" />
+    <ClInclude Include="Queue.h" />
     <ClInclude Include="QueueSystem.h" />
+    <ClInclude Include="Server.h" />
+    <ClInclude Include="Simulator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ArrivalEvent.cpp" />
-    <ClCompile Include="DepartureEvent.cpp" />
+    <ClCompile Include="Customer.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventQueue.cpp" />
     <ClCompile Include="ExponentialDistribution.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="MM1Queue.cpp" />
+    <ClCompile Include="Queue.cpp" />
     <ClCompile Include="QueueSystem.cpp" />
+    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="Simulator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

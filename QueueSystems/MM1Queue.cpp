@@ -1,132 +1,96 @@
 ﻿#include "MM1Queue.h"
-#include <stdexcept>
 
-/**
- * @brief Constructor for MM1Queue.
- *
- * Initializes the arrival and service rates and sets the simulation state to zero customers.
- * Throws an exception if the system is unstable (λ >= μ).
- *
- * @param arrivalRate The arrival rate (λ) of customers.
- * @param serviceRate The service rate (μ) of the server.
- */
 MM1Queue::MM1Queue(double arrivalRate, double serviceRate)
-    : lambda_(arrivalRate), mu_(serviceRate), currentCustomerCount_(0)
+    : lambda_(arrivalRate), mu_(serviceRate), queue_(), server_(serviceRate)
 {
     if (arrivalRate >= serviceRate) {
-        throw std::invalid_argument("System is unstable: arrival rate must be less than service rate (λ < μ).");
+        throw std::invalid_argument("Unstable system: arrival rate must be less than service rate (λ < μ).");
     }
 }
 
-/**
- * @brief Destructor for MM1Queue.
- */
 MM1Queue::~MM1Queue() {
-    // No dynamic memory cleanup required.
+    // Clean up any remaining customers from the queue.
+    while (!queue_.isEmpty()) {
+        Customer* customer = queue_.dequeue();
+        delete customer;
+    }
+    // If the server is busy, finish service and clean up the customer.
+    if (!server_.isIdle()) {
+        Customer* customer = server_.finishService(0.0); // Using 0.0 as a dummy time.
+        delete customer;
+    }
 }
 
-/**
- * @brief Get the arrival rate (λ) for the queue.
- *
- * @return double The arrival rate.
- */
+// --- Analytical Methods ---
+
 double MM1Queue::getArrivalRate() const {
     return lambda_;
 }
 
-/**
- * @brief Compute the average waiting time in the system (W).
- *
- * For an M/M/1 queue, W = 1 / (μ - λ).
- *
- * @return double The average waiting time.
- */
 double MM1Queue::computeAverageWaitingTime() const {
+    // For an M/M/1 queue, average waiting time in the system W = 1 / (μ - λ)
     return 1.0 / (mu_ - lambda_);
 }
 
-/**
- * @brief Compute the average number of customers in the system (L).
- *
- * For an M/M/1 queue, L = ρ / (1 - ρ), where ρ = λ / μ.
- *
- * @return double The average number of customers in the system.
- */
 double MM1Queue::computeAverageNumberInSystem() const {
-    double rho = lambda_ / mu_;
-    return rho / (1.0 - rho);
+    // For an M/M/1 queue, average number in the system L = λ / (μ - λ)
+    return lambda_ / (mu_ - lambda_);
 }
 
-/**
- * @brief Compute the average waiting time in the queue (Wq).
- *
- * For an M/M/1 queue, Wq = ρ / (μ - λ), where ρ = λ / μ.
- *
- * @return double The average waiting time in the queue.
- */
-double MM1Queue::computeAverageWaitingTimeQueue() const {
-    double rho = lambda_ / mu_;
-    return rho / (mu_ - lambda_);
-}
+// --- Simulation Methods ---
 
-/**
- * @brief Compute the average number of customers in the queue (Lq).
- *
- * For an M/M/1 queue, Lq = ρ^2 / (1 - ρ), where ρ = λ / μ.
- *
- * @return double The average number of customers in the queue.
- */
-double MM1Queue::computeAverageNumberInQueue() const {
-    double rho = lambda_ / mu_;
-    return (rho * rho) / (1.0 - rho);
-}
-
-// --- Simulation Methods Implementation ---
-
-/**
- * @brief Process a customer arrival.
- *
- * Updates the simulation state by incrementing the current customer count.
- * Additional simulation-specific actions (like recording the arrival time) can be added here.
- *
- * @param currentTime The simulation time at which the arrival occurs.
- */
 void MM1Queue::processArrival(double currentTime) {
-    // Update state: increment the customer count.
-    currentCustomerCount_++;
-    // (Optional: record currentTime for statistical analysis)
-}
+    // Create and enqueue a new Customer.
+    Customer* customer = new Customer(currentTime);
+    queue_.enqueue(customer);
 
-/**
- * @brief Process a customer departure.
- *
- * Updates the simulation state by decrementing the current customer count.
- * Additional simulation-specific actions (like computing waiting time) can be added here.
- *
- * @param currentTime The simulation time at which the departure occurs.
- */
-void MM1Queue::processDeparture(double currentTime) {
-    // Ensure that there is at least one customer to depart.
-    if (currentCustomerCount_ > 0) {
-        currentCustomerCount_--;
+    // If server is idle, start service immediately.
+    if (!isServerBusy() && !queue_.isEmpty()) {
+        Customer* nextCustomer = queue_.dequeue();
+        server_.startService(nextCustomer, currentTime);
     }
-    // (Optional: update statistics such as total waiting time)
 }
 
-/**
- * @brief Get the current number of customers in the system.
- *
- * @return int The current customer count.
- */
+void MM1Queue::processDeparture(double currentTime) {
+    // Finish service for the current customer.
+    Customer* finishedCustomer = server_.finishService(currentTime);
+    if (finishedCustomer) {
+        delete finishedCustomer;
+    }
+    // If there are customers waiting, start service for the next customer.
+    if (!queue_.isEmpty()) {
+        Customer* nextCustomer = queue_.dequeue();
+        server_.startService(nextCustomer, currentTime);
+    }
+}
+
 int MM1Queue::getCurrentCustomerCount() const {
-    return currentCustomerCount_;
+    // Total customers equals those waiting in the queue plus one if the server is busy.
+    int count = queue_.size();
+    if (!server_.isIdle()) {
+        count++;
+    }
+    return count;
 }
 
-/**
- * @brief Reset the simulation state.
- *
- * Resets the current customer count to zero. Additional statistics can be reset here as well.
- */
 void MM1Queue::resetSimulationState() {
-    currentCustomerCount_ = 0;
+    // Clear the queue.
+    while (!queue_.isEmpty()) {
+        Customer* customer = queue_.dequeue();
+        delete customer;
+    }
+    // Reset the server if it is busy.
+    if (!server_.isIdle()) {
+        Customer* customer = server_.finishService(0.0);
+        delete customer;
+    }
+}
+
+bool MM1Queue::isServerBusy() const {
+    // The server is busy if it is not idle.
+    return !server_.isIdle();
+}
+
+int MM1Queue::getQueueSize() const {
+    return queue_.size();
 }
