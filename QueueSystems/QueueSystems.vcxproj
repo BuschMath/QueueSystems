@@ -19,10 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MeasurementEvent.h" />
     <ClInclude Include="MM1Queue.h" />
+    <ClInclude Include="Observable.h" />
     <ClInclude Include="QueueEvents.h" />
     <ClInclude Include="QueueModel.h" />
     <ClInclude Include="Simulation.h" />
+    <ClInclude Include="StateLogger.h" />
+    <ClInclude Include="StateObserver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
