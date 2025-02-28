@@ -6,6 +6,13 @@ MM1Queue::MM1Queue(double arrivalRate, double serviceRate)
     if (arrivalRate >= serviceRate) {
         throw std::invalid_argument("Unstable system: arrival rate must be less than service rate (λ < μ).");
     }
+
+    // Create exponential distributions for interarrival and service times.
+    interarrivalDist = new ExponentialDistribution(arrivalRate);
+    serviceDist = new ExponentialDistribution(serviceRate);
+
+    // Schedule the first arrival event at time 0.
+    sim.scheduleEvent(new ArrivalEvent(0.0, this));
 }
 
 MM1Queue::~MM1Queue() {

@@ -2,6 +2,10 @@
 #define MM1QUEUE_H
 
 #include "QueueSystem.h"
+#include "Simulator.h"
+#include "ExponentialDistribution.h"
+#include "ArrivalEvent.h"
+#include "DepartureEvent.h"
 #include "EventTarget.h"
 #include "Queue.h"
 #include "Server.h"
@@ -43,6 +47,10 @@ private:
 
     Queue queue_;    ///< Waiting line for customers.
     Server server_;  ///< Server processing customers.
+
+    Simulator sim;   ///< The simulation engine.
+    ExponentialDistribution* interarrivalDist;
+    ExponentialDistribution* serviceDist;
 };
 
 #endif // MM1QUEUE_H
