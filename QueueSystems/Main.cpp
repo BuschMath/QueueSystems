@@ -1,40 +1,47 @@
-#include <iostream>
+﻿#include <iostream>
 #include "Simulation.h"
-#include "DD1Queue.h"
+#include "MMSQueue.h"
 #include "StateLogger.h"
+#include "MeasurementEvent.h"
 
 int main() {
-    // Create the simulation engine
+    // Create the simulation instance.
     Simulation sim;
 
-    // Define queue parameters (fixed interarrival and service times)
-    double interarrivalTime = 2.0; // Every 2 time units
-    double serviceTime = 1.5;      // Each service takes 1.5 time units
+    // Parameters for the MMS queue:
+    double arrivalRate = 2.0;
+    double serviceRate = 3.0;
+    int numServers = 2;
 
-    // Create a D/D/1 queue
-    DD1Queue queue(sim, interarrivalTime, serviceTime);
+    // Create the MMSQueue instance.
+    MMSQueue queue(sim, arrivalRate, serviceRate, numServers);
 
-    // Attach a state logger to the queue
+    // Create a state logger and attach it to the queue.
     StateLogger logger;
     queue.attach(&logger);
 
-    // Start the queue simulation
+    // Start the MMSQueue simulation by scheduling the first arrival.
     queue.start();
 
-    // Run the simulation for 20 time units
-    sim.run(20.0);
+    // Schedule the measurement events to log the queue's state.
+    // The first measurement event is scheduled at sampleInterval.
+    double sampleInterval = 0.5;
+    sim.scheduleEvent(std::make_shared<MeasurementEvent>(sampleInterval, &queue, sampleInterval));
 
-    // Print results
-    std::cout << "Simulation completed.\n";
-    std::cout << "Total Arrivals: " << queue.getTotalArrivals() << "\n";
-    std::cout << "Total Departures: " << queue.getTotalDepartures() << "\n";
+    // Run the simulation until time 10.0.
+    sim.run(10.0);
 
-    // Retrieve and print the state log
+    // Output simulation metrics.
+    std::cout << "Simulation finished at time: " << sim.getCurrentTime() << std::endl;
+    std::cout << "Total Arrivals: " << queue.getTotalArrivals() << std::endl;
+    std::cout << "Total Departures: " << queue.getTotalDepartures() << std::endl;
+    std::cout << "Average Number in System: " << queue.getAverageNumberInSystem() << std::endl;
+
+    // Print the state log collected by the StateLogger.
+    std::cout << "\nState Log:" << std::endl;
     const auto& log = logger.getLog();
-    std::cout << "\nTime\tQueue Size\n";
-    std::cout << "------------------\n";
     for (const auto& entry : log) {
-        std::cout << entry.time << "\t" << entry.state << "\n";
+        std::cout << "Time: " << entry.time << ", Number in system: " << entry.state << std::endl;
     }
 
     return 0;

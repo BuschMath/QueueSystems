@@ -22,6 +22,7 @@
     <ClInclude Include="DD1Queue.h" />
     <ClInclude Include="MeasurementEvent.h" />
     <ClInclude Include="MM1Queue.h" />
+    <ClInclude Include="MMSQueue.h" />
     <ClInclude Include="Observable.h" />
     <ClInclude Include="QueueEvents.h" />
     <ClInclude Include="QueueModel.h" />
@@ -33,6 +34,7 @@
     <ClCompile Include="DD1Queue.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MM1Queue.cpp" />
+    <ClCompile Include="MMSQueue.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
