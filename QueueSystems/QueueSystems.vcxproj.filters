@@ -39,12 +39,18 @@
     <ClInclude Include="MeasurementEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DD1Queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MM1Queue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DD1Queue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

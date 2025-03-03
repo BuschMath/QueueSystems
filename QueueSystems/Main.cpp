@@ -1,45 +1,40 @@
-#include "Simulation.h"
-#include "MM1Queue.h"
-#include "MeasurementEvent.h"
-#include "StateLogger.h"
 #include <iostream>
-#include <fstream>
+#include "Simulation.h"
+#include "DD1Queue.h"
+#include "StateLogger.h"
 
 int main() {
-    // Create the simulation engine.
+    // Create the simulation engine
     Simulation sim;
 
-    // Define arrival and service rates.
-    double lambda = 1.0; // Average of one arrival per time unit.
-    double mu = 1.2;     // Service rate is slightly faster than the arrival rate.
-    double sampleInterval = 0.1; // Interval for sampling the system state.
+    // Define queue parameters (fixed interarrival and service times)
+    double interarrivalTime = 2.0; // Every 2 time units
+    double serviceTime = 1.5;      // Each service takes 1.5 time units
 
-    // Create the M/M/1 queue model.
-    MM1Queue queue(sim, lambda, mu);
+    // Create a D/D/1 queue
+    DD1Queue queue(sim, interarrivalTime, serviceTime);
 
+    // Attach a state logger to the queue
     StateLogger logger;
     queue.attach(&logger);
 
-    queue.start();  // Schedule the first arrival.
+    // Start the queue simulation
+    queue.start();
 
-    // Schedule the first measurement event.
-    double firstMeasurementTime = sim.getCurrentTime() + sampleInterval;
-    sim.scheduleEvent(std::make_shared<MeasurementEvent>(firstMeasurementTime, &queue, sampleInterval));
+    // Run the simulation for 20 time units
+    sim.run(20.0);
 
-    // Run the simulation for 100 time units.
-    sim.run(100.0);
+    // Print results
+    std::cout << "Simulation completed.\n";
+    std::cout << "Total Arrivals: " << queue.getTotalArrivals() << "\n";
+    std::cout << "Total Departures: " << queue.getTotalDepartures() << "\n";
 
-    // Output simulation metrics.
-    std::cout << "Total Arrivals: " << queue.getTotalArrivals() << std::endl;
-    std::cout << "Total Departures: " << queue.getTotalDepartures() << std::endl;
-    std::cout << "Average Number in System: " << queue.getAverageNumberInSystem() << std::endl;
-
-    // Output the state log collected by the observer.
+    // Retrieve and print the state log
     const auto& log = logger.getLog();
-    std::ofstream outfile("output.txt");
-    outfile << "\nTime, Number in System:" << std::endl;
+    std::cout << "\nTime\tQueue Size\n";
+    std::cout << "------------------\n";
     for (const auto& entry : log) {
-        outfile << entry.time << ", " << entry.state << std::endl;
+        std::cout << entry.time << "\t" << entry.state << "\n";
     }
 
     return 0;
