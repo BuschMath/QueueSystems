@@ -3,6 +3,7 @@
 #include "MeasurementEvent.h"
 #include "StateLogger.h"
 #include <iostream>
+#include <fstream>
 
 int main() {
     // Create the simulation engine.
@@ -11,7 +12,7 @@ int main() {
     // Define arrival and service rates.
     double lambda = 1.0; // Average of one arrival per time unit.
     double mu = 1.2;     // Service rate is slightly faster than the arrival rate.
-    double sampleInterval = 0.5; // Interval for sampling the system state.
+    double sampleInterval = 0.1; // Interval for sampling the system state.
 
     // Create the M/M/1 queue model.
     MM1Queue queue(sim, lambda, mu);
@@ -35,9 +36,10 @@ int main() {
 
     // Output the state log collected by the observer.
     const auto& log = logger.getLog();
-    std::cout << "\nTime, Number in System:" << std::endl;
+    std::ofstream outfile("output.txt");
+    outfile << "\nTime, Number in System:" << std::endl;
     for (const auto& entry : log) {
-        std::cout << entry.time << ", " << entry.state << std::endl;
+        outfile << entry.time << ", " << entry.state << std::endl;
     }
 
     return 0;
