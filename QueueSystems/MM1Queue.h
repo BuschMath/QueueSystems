@@ -4,11 +4,13 @@
 #include "Simulation.h"
 #include "QueueModel.h"
 #include "QueueEvents.h"
+#include "Observable.h"
 #include <random>
+#include <vector>
 #include <memory>
 
 // MM1Queue implements a simple M/M/1 queue model.
-class MM1Queue : public QueueModel {
+class MM1Queue : public QueueModel, public Observable {
 public:
     // Constructor takes a reference to the simulation engine and queue parameters.
     MM1Queue(Simulation& sim, double arrivalRate, double serviceRate);
@@ -19,6 +21,11 @@ public:
     // Overrides from QueueModel.
     virtual void handleArrival(Simulation& sim) override;
     virtual void handleDeparture(Simulation& sim) override;
+
+    // Expose the state (number of customers in the system) for observers.
+    virtual int getState() const override {
+        return numInSystem;
+    }
 
     // Accessors for simulation metrics.
     double getAverageNumberInSystem() const;
