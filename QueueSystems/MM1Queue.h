@@ -5,6 +5,7 @@
 #include "QueueModel.h"
 #include "QueueEvents.h"
 #include "Observable.h"
+#include <optional>
 #include <random>
 #include <vector>
 #include <memory>
@@ -32,6 +33,9 @@ public:
     int getTotalArrivals() const;
     int getTotalDepartures() const;
 
+    // Helper for obtaining next interarrival time.
+    double getNextInterarrivalTime();
+
 private:
     Simulation& sim;
     double lambda;  // Arrival rate
@@ -40,7 +44,7 @@ private:
 
     // Random number generators for exponential interarrival and service times.
     std::default_random_engine rng;
-    std::exponential_distribution<double> arrivalDist;
+    std::optional<std::exponential_distribution<double>> arrivalDist;
     std::exponential_distribution<double> serviceDist;
 
     // Metrics for statistics.

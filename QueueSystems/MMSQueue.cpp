@@ -12,8 +12,11 @@ MMSQueue::MMSQueue(Simulation& sim, double arrivalRate, double serviceRate, int 
 }
 
 void MMSQueue::start() {
-    double firstArrivalTime = sim.getCurrentTime() + arrivalDist(rng);
-    sim.scheduleEvent(std::make_shared<GenericArrivalEvent>(firstArrivalTime, this));
+    if (lambda > 0)
+    {
+        double firstArrivalTime = sim.getCurrentTime() + arrivalDist(rng);
+        sim.scheduleEvent(std::make_shared<GenericArrivalEvent>(firstArrivalTime, this));
+    }
 }
 
 void MMSQueue::updateMetrics(double currentTime) {

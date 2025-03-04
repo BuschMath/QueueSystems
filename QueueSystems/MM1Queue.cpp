@@ -4,16 +4,29 @@
 MM1Queue::MM1Queue(Simulation& sim, double arrivalRate, double serviceRate)
     : sim(sim), lambda(arrivalRate), mu(serviceRate),
     numInSystem(0), rng(std::random_device{}()),
-    arrivalDist(arrivalRate), serviceDist(serviceRate),
+    serviceDist(serviceRate),
     totalArrivals(0), totalDepartures(0),
     cumulativeTimeWeightedCustomers(0.0), lastEventTime(0.0)
 {
+    if (lambda > 0) {
+        arrivalDist.emplace(lambda);
+    }
+}
+
+double MM1Queue::getNextInterarrivalTime() {
+    if (arrivalDist.has_value()) {
+        return (*arrivalDist)(rng);
+    }
+    // If lambda is zero, return infinity so that no arrival is scheduled.
+    return std::numeric_limits<double>::infinity();
 }
 
 // Schedule the first arrival event.
 void MM1Queue::start() {
-    double firstArrivalTime = sim.getCurrentTime() + arrivalDist(rng);
-    sim.scheduleEvent(std::make_shared<GenericArrivalEvent>(firstArrivalTime, this));
+    double firstArrivalTime = sim.getCurrentTime() + getNextInterarrivalTime();
+    if (std::isfinite(firstArrivalTime)) {
+        sim.scheduleEvent(std::make_shared<GenericArrivalEvent>(firstArrivalTime, this));
+    }
 }
 
 // Update the time-weighted metric based on elapsed time.
@@ -30,9 +43,11 @@ void MM1Queue::handleArrival(Simulation& sim) {
     totalArrivals++;
     numInSystem++;
 
-    // Schedule the next arrival.
-    double nextArrivalTime = currentTime + arrivalDist(rng);
-    sim.scheduleEvent(std::make_shared<GenericArrivalEvent>(nextArrivalTime, this));
+    // Schedule the next arrival if lambda > 0.
+    double nextArrivalTime = currentTime + getNextInterarrivalTime();
+    if (std::isfinite(nextArrivalTime)) {
+        sim.scheduleEvent(std::make_shared<GenericArrivalEvent>(nextArrivalTime, this));
+    }
 
     // If the server was idle, immediately schedule a departure.
     if (numInSystem == 1) {

@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 #include <iostream>
+#include <fstream>
 
 int main() {
     // Create the simulation engine.
@@ -14,8 +15,8 @@ int main() {
     JacksonNetwork network(sim);
 
     // Add nodes. For instance, add one M/M/1 node and one M/M/s (with 2 servers) node.
-    int node0 = network.addMM1Queue(0.0833, 0.1667); // arrival rate 0.0833, service rate 0.1667
-	int node1 = network.addMM1Queue(0.00000001, 0.1167); // arrival rate 0, service rate 0.1167
+    int node0 = network.addMM1Queue(5, 10); // arrival rate 0.0833, service rate 0.1667
+	int node1 = network.addMM1Queue(0, 7); // arrival rate 0, service rate 0.1167
 
     // Define routing probabilities:
     // For node0, 30% go to node1; for node1, 20% go back to node0.
@@ -46,38 +47,40 @@ int main() {
     network.start();
 
     // Run the simulation until time 60.
-    sim.run(60.0);
+    sim.run(100.0);
 
     // After simulation, you can extract metrics (for example, average number in system)
     // by downcasting to JacksonMM1Queue or JacksonMMSQueue as needed.
     auto mm1Node = dynamic_cast<JacksonMM1Queue*>(network.getNode(node0));
     auto mmsNode = dynamic_cast<JacksonMM1Queue*>(network.getNode(node1));
 
+    std::ofstream outfile("output.txt");
+
     if (mm1Node) {
-        std::cout << "Node0 (MM1Queue) Metrics:\n";
-        std::cout << "  Total Arrivals: " << mm1Node->getTotalArrivals() << "\n";
-        std::cout << "  Total Departures: " << mm1Node->getTotalDepartures() << "\n";
-        std::cout << "  Average Number in System: " << mm1Node->getAverageNumberInSystem() << "\n";
+        outfile << "Node0 (MM1Queue) Metrics:\n";
+        outfile << "  Total Arrivals: " << mm1Node->getTotalArrivals() << "\n";
+        outfile << "  Total Departures: " << mm1Node->getTotalDepartures() << "\n";
+        outfile << "  Average Number in System: " << mm1Node->getAverageNumberInSystem() << "\n";
     }
     else {
-        std::cout << "Failed to retrieve MM1Queue metrics.\n";
+        outfile << "Failed to retrieve MM1Queue metrics.\n";
     }
 
     if (mmsNode) {
-        std::cout << "Node1 (MMSQueue) Metrics:\n";
-        std::cout << "  Total Arrivals: " << mmsNode->getTotalArrivals() << "\n";
-        std::cout << "  Total Departures: " << mmsNode->getTotalDepartures() << "\n";
-        std::cout << "  Average Number in System: " << mmsNode->getAverageNumberInSystem() << "\n";
+        outfile << "Node1 (MMSQueue) Metrics:\n";
+        outfile << "  Total Arrivals: " << mmsNode->getTotalArrivals() << "\n";
+        outfile << "  Total Departures: " << mmsNode->getTotalDepartures() << "\n";
+        outfile << "  Average Number in System: " << mmsNode->getAverageNumberInSystem() << "\n";
     }
     else {
-        std::cout << "Failed to retrieve MMSQueue metrics.\n";
+        outfile << "Failed to retrieve MMSQueue metrics.\n";
     }
 
     // Extract and print the measurement log from the logger.
     const auto& log = logger.getLog();
-    std::cout << "\nMeasurement Log:\n";
+    outfile << "\nMeasurement Log:\n";
     for (const auto& entry : log) {
-        std::cout << "  Time: " << entry.time << ", State: " << entry.state << "\n";
+        outfile << "  Time: " << entry.time << ", State: " << entry.state << "\n";
     }
 
     return 0;

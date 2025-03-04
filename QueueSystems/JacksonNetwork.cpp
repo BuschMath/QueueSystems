@@ -1,6 +1,7 @@
 #include "JacksonNetwork.h"
 #include <numeric>
 #include <random>
+#include <iostream>
 
 // -------------------------
 // JacksonMM1Queue Implementation
@@ -99,6 +100,13 @@ void JacksonNetwork::routeCustomer(int fromNodeId, double currentTime) {
 
     // If destination remains -1 then the customer leaves the network.
     if (destination >= 0 && destination < nodes.size()) {
+std::cout << "Routing customer from node " << fromNodeId << " to node " << destination << " at time " << currentTime << std::endl;
+if(fromNodeId == 0 && destination == 1)
+     node0to1Counter++;
+if(fromNodeId == 1 && destination == 0)
+	 node1to0Counter++;
+std::cout << "node0to1Counter: " << node0to1Counter << std::endl;
+std::cout << "node1to0Counter: " << node1to0Counter << std::endl;
         // Schedule an arrival event for the destination node immediately.
         sim.scheduleEvent(std::make_shared<GenericArrivalEvent>(currentTime, nodes[destination]));
     }

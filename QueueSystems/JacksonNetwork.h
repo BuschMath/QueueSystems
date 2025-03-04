@@ -69,6 +69,9 @@ private:
     std::vector<QueueModel*> nodes;  // Stores pointers to our Jackson queue nodes.
     std::vector<std::vector<double>> routingMatrix;
     std::default_random_engine rng;
+
+    int node0to1Counter = 0;
+    int node1to0Counter = 0;
 };
 
 #endif // JACKSON_NETWORK_H
