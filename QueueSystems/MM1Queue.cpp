@@ -37,19 +37,19 @@ void MM1Queue::updateMetrics(double currentTime) {
 }
 
 // Process an arrival event.
-void MM1Queue::handleArrival(Simulation& sim) {
+void MM1Queue::handleArrival(Simulation& sim, bool isExternal) {
     double currentTime = sim.getCurrentTime();
     updateMetrics(currentTime);
     totalArrivals++;
     numInSystem++;
 
-    // Schedule the next arrival if lambda > 0.
-    double nextArrivalTime = currentTime + getNextInterarrivalTime();
-    if (std::isfinite(nextArrivalTime)) {
-        sim.scheduleEvent(std::make_shared<GenericArrivalEvent>(nextArrivalTime, this));
+    // Only schedule a new external arrival if this is an external arrival.
+    if (isExternal && std::isfinite(getNextInterarrivalTime())) {
+        double nextArrivalTime = currentTime + getNextInterarrivalTime();
+        sim.scheduleEvent(std::make_shared<ExternalArrivalEvent>(nextArrivalTime, this));
     }
 
-    // If the server was idle, immediately schedule a departure.
+    // If the server was idle, schedule a departure.
     if (numInSystem == 1) {
         double departureTime = currentTime + serviceDist(rng);
         sim.scheduleEvent(std::make_shared<GenericDepartureEvent>(departureTime, this));

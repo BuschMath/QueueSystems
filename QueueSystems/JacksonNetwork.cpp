@@ -1,7 +1,6 @@
 #include "JacksonNetwork.h"
 #include <numeric>
 #include <random>
-#include <iostream>
 
 // -------------------------
 // JacksonMM1Queue Implementation
@@ -74,22 +73,16 @@ void JacksonNetwork::start() {
 }
 
 void JacksonNetwork::routeCustomer(int fromNodeId, double currentTime) {
-    // Check that we have a routing row for this node.
     if (fromNodeId >= routingMatrix.size())
         return;
 
     const std::vector<double>& row = routingMatrix[fromNodeId];
 
-    // Sum of routing probabilities for departures from node fromNodeId.
-    double sumProb = std::accumulate(row.begin(), row.end(), 0.0);
-
-    // Draw a random number in [0,1].
+    double cumulative = 0.0;
+    int destination = -1;
     std::uniform_real_distribution<double> dist(0.0, 1.0);
     double r = dist(rng);
 
-    // Determine destination by checking cumulative probabilities.
-    double cumulative = 0.0;
-    int destination = -1;
     for (size_t j = 0; j < row.size(); j++) {
         cumulative += row[j];
         if (r < cumulative) {
@@ -98,17 +91,9 @@ void JacksonNetwork::routeCustomer(int fromNodeId, double currentTime) {
         }
     }
 
-    // If destination remains -1 then the customer leaves the network.
+    // If destination is valid, schedule a routed arrival event.
     if (destination >= 0 && destination < nodes.size()) {
-std::cout << "Routing customer from node " << fromNodeId << " to node " << destination << " at time " << currentTime << std::endl;
-if(fromNodeId == 0 && destination == 1)
-     node0to1Counter++;
-if(fromNodeId == 1 && destination == 0)
-	 node1to0Counter++;
-std::cout << "node0to1Counter: " << node0to1Counter << std::endl;
-std::cout << "node1to0Counter: " << node1to0Counter << std::endl;
-        // Schedule an arrival event for the destination node immediately.
-        sim.scheduleEvent(std::make_shared<GenericArrivalEvent>(currentTime, nodes[destination]));
+        sim.scheduleEvent(std::make_shared<RoutedArrivalEvent>(currentTime, nodes[destination]));
     }
 }
 

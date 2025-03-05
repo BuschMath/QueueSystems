@@ -1,212 +1,225 @@
-Node0 (MM1Queue) Metrics:
-  Total Arrivals: 19278
-  Total Departures: 942
-  Average Number in System: 5896.37
-Node1 (MMSQueue) Metrics:
-  Total Arrivals: 276
-  Total Departures: 276
-  Average Number in System: 0.562929
+Jackson Network Simulation Results
+----------------------------------
+Simulation Time: 100
 
-Measurement Log:
-  Time: 0, State: 0
+Theoretical Metrics:
+  Node 0 effective arrival rate: ~5.32 per time unit
+  Node 0 average number in system: ~1.14
+  Node 1 effective arrival rate: ~1.60 per time unit
+  Node 1 average number in system: ~0.30
+
+Node 0 (MM1Queue) Simulation Metrics:
+  Total Arrivals: 13154
+  Total Departures: 977
+  Average Number in System: 3360.77
+
+Node 1 (MM1Queue) Simulation Metrics:
+  Total Arrivals: 308
+  Total Departures: 307
+  Average Number in System: 0.756177
+
+Measurement Log for Node 0:
   Time: 0, State: 0
   Time: 1, State: 0
+  Time: 2, State: 3
+  Time: 3, State: 5
+  Time: 4, State: 1
+  Time: 5, State: 2
+  Time: 6, State: 0
+  Time: 7, State: 1
+  Time: 8, State: 2
+  Time: 9, State: 1
+  Time: 10, State: 3
+  Time: 11, State: 2
+  Time: 12, State: 2
+  Time: 13, State: 9
+  Time: 14, State: 9
+  Time: 15, State: 20
+  Time: 16, State: 33
+  Time: 17, State: 35
+  Time: 18, State: 45
+  Time: 19, State: 64
+  Time: 20, State: 81
+  Time: 21, State: 92
+  Time: 22, State: 101
+  Time: 23, State: 106
+  Time: 24, State: 121
+  Time: 25, State: 150
+  Time: 26, State: 165
+  Time: 27, State: 192
+  Time: 28, State: 238
+  Time: 29, State: 265
+  Time: 30, State: 299
+  Time: 31, State: 332
+  Time: 32, State: 374
+  Time: 33, State: 428
+  Time: 34, State: 464
+  Time: 35, State: 525
+  Time: 36, State: 594
+  Time: 37, State: 666
+  Time: 38, State: 725
+  Time: 39, State: 798
+  Time: 40, State: 863
+  Time: 41, State: 939
+  Time: 42, State: 1004
+  Time: 43, State: 1086
+  Time: 44, State: 1184
+  Time: 45, State: 1272
+  Time: 46, State: 1338
+  Time: 47, State: 1417
+  Time: 48, State: 1524
+  Time: 49, State: 1637
+  Time: 50, State: 1739
+  Time: 51, State: 1879
+  Time: 52, State: 2005
+  Time: 53, State: 2119
+  Time: 54, State: 2247
+  Time: 55, State: 2401
+  Time: 56, State: 2539
+  Time: 57, State: 2663
+  Time: 58, State: 2840
+  Time: 59, State: 3005
+  Time: 60, State: 3166
+  Time: 61, State: 3333
+  Time: 62, State: 3539
+  Time: 63, State: 3709
+  Time: 64, State: 3906
+  Time: 65, State: 4089
+  Time: 66, State: 4281
+  Time: 67, State: 4465
+  Time: 68, State: 4632
+  Time: 69, State: 4811
+  Time: 70, State: 5029
+  Time: 71, State: 5225
+  Time: 72, State: 5403
+  Time: 73, State: 5637
+  Time: 74, State: 5813
+  Time: 75, State: 6028
+  Time: 76, State: 6218
+  Time: 77, State: 6431
+  Time: 78, State: 6668
+  Time: 79, State: 6885
+  Time: 80, State: 7098
+  Time: 81, State: 7311
+  Time: 82, State: 7566
+  Time: 83, State: 7798
+  Time: 84, State: 8022
+  Time: 85, State: 8263
+  Time: 86, State: 8497
+  Time: 87, State: 8740
+  Time: 88, State: 8972
+  Time: 89, State: 9201
+  Time: 90, State: 9470
+  Time: 91, State: 9724
+  Time: 92, State: 9990
+  Time: 93, State: 10283
+  Time: 94, State: 10546
+  Time: 95, State: 10829
+  Time: 96, State: 11092
+  Time: 97, State: 11337
+  Time: 98, State: 11602
+  Time: 99, State: 11892
+  Time: 100, State: 12177
+
+Measurement Log for Node 1:
+  Time: 0, State: 0
   Time: 1, State: 0
   Time: 2, State: 0
-  Time: 2, State: 2
   Time: 3, State: 0
-  Time: 3, State: 1
-  Time: 4, State: 2
-  Time: 4, State: 0
-  Time: 5, State: 7
-  Time: 5, State: 0
-  Time: 6, State: 4
+  Time: 4, State: 1
+  Time: 5, State: 1
   Time: 6, State: 1
-  Time: 7, State: 0
-  Time: 7, State: 11
-  Time: 8, State: 1
-  Time: 8, State: 31
-  Time: 9, State: 48
+  Time: 7, State: 1
+  Time: 8, State: 0
   Time: 9, State: 0
-  Time: 10, State: 70
-  Time: 10, State: 3
+  Time: 10, State: 0
   Time: 11, State: 1
-  Time: 11, State: 101
-  Time: 12, State: 0
-  Time: 12, State: 149
-  Time: 13, State: 195
-  Time: 13, State: 1
-  Time: 14, State: 1
-  Time: 14, State: 249
-  Time: 15, State: 288
-  Time: 15, State: 1
-  Time: 16, State: 2
-  Time: 16, State: 345
-  Time: 17, State: 386
+  Time: 12, State: 1
+  Time: 13, State: 0
+  Time: 14, State: 3
+  Time: 15, State: 0
+  Time: 16, State: 1
   Time: 17, State: 0
-  Time: 18, State: 444
-  Time: 18, State: 0
-  Time: 19, State: 2
-  Time: 19, State: 484
-  Time: 20, State: 2
-  Time: 20, State: 547
+  Time: 18, State: 2
+  Time: 19, State: 0
+  Time: 20, State: 1
   Time: 21, State: 1
-  Time: 21, State: 598
-  Time: 22, State: 661
   Time: 22, State: 0
-  Time: 23, State: 721
   Time: 23, State: 0
-  Time: 24, State: 792
-  Time: 24, State: 2
-  Time: 25, State: 847
+  Time: 24, State: 0
   Time: 25, State: 0
-  Time: 26, State: 930
-  Time: 26, State: 0
-  Time: 27, State: 2
-  Time: 27, State: 1015
-  Time: 28, State: 1085
+  Time: 26, State: 5
+  Time: 27, State: 1
   Time: 28, State: 0
   Time: 29, State: 2
-  Time: 29, State: 1176
   Time: 30, State: 0
-  Time: 30, State: 1262
-  Time: 31, State: 1360
-  Time: 31, State: 0
+  Time: 31, State: 2
   Time: 32, State: 0
-  Time: 32, State: 1453
-  Time: 33, State: 1556
-  Time: 33, State: 1
+  Time: 33, State: 0
   Time: 34, State: 1
-  Time: 34, State: 1679
   Time: 35, State: 0
-  Time: 35, State: 1802
   Time: 36, State: 0
-  Time: 36, State: 1931
   Time: 37, State: 1
-  Time: 37, State: 2073
-  Time: 38, State: 1
-  Time: 38, State: 2247
-  Time: 39, State: 0
-  Time: 39, State: 2395
-  Time: 40, State: 2566
+  Time: 38, State: 2
+  Time: 39, State: 2
   Time: 40, State: 0
-  Time: 41, State: 0
-  Time: 41, State: 2741
-  Time: 42, State: 2904
-  Time: 42, State: 0
-  Time: 43, State: 3087
+  Time: 41, State: 1
+  Time: 42, State: 2
   Time: 43, State: 1
   Time: 44, State: 0
-  Time: 44, State: 3251
-  Time: 45, State: 3408
   Time: 45, State: 0
-  Time: 46, State: 3559
   Time: 46, State: 0
-  Time: 47, State: 0
-  Time: 47, State: 3732
-  Time: 48, State: 0
-  Time: 48, State: 3933
-  Time: 49, State: 4109
+  Time: 47, State: 4
+  Time: 48, State: 3
   Time: 49, State: 0
-  Time: 50, State: 4318
   Time: 50, State: 1
-  Time: 51, State: 4499
-  Time: 51, State: 1
-  Time: 52, State: 4687
+  Time: 51, State: 0
   Time: 52, State: 0
-  Time: 53, State: 4876
-  Time: 53, State: 1
-  Time: 54, State: 5069
-  Time: 54, State: 0
-  Time: 55, State: 5279
-  Time: 55, State: 0
+  Time: 53, State: 0
+  Time: 54, State: 4
+  Time: 55, State: 1
   Time: 56, State: 0
-  Time: 56, State: 5472
   Time: 57, State: 0
-  Time: 57, State: 5689
-  Time: 58, State: 5904
-  Time: 58, State: 1
-  Time: 59, State: 0
-  Time: 59, State: 6119
+  Time: 58, State: 0
+  Time: 59, State: 2
   Time: 60, State: 0
-  Time: 60, State: 6355
-  Time: 61, State: 6598
   Time: 61, State: 0
-  Time: 62, State: 2
-  Time: 62, State: 6825
-  Time: 63, State: 7072
-  Time: 63, State: 1
-  Time: 64, State: 7306
-  Time: 64, State: 2
-  Time: 65, State: 0
-  Time: 65, State: 7546
-  Time: 66, State: 7798
-  Time: 66, State: 1
+  Time: 62, State: 1
+  Time: 63, State: 0
+  Time: 64, State: 0
+  Time: 65, State: 1
+  Time: 66, State: 0
   Time: 67, State: 0
-  Time: 67, State: 8013
-  Time: 68, State: 2
-  Time: 68, State: 8257
-  Time: 69, State: 8548
-  Time: 69, State: 0
-  Time: 70, State: 8816
+  Time: 68, State: 1
+  Time: 69, State: 3
   Time: 70, State: 0
-  Time: 71, State: 9068
-  Time: 71, State: 0
-  Time: 72, State: 9321
-  Time: 72, State: 1
-  Time: 73, State: 9552
-  Time: 73, State: 1
-  Time: 74, State: 0
-  Time: 74, State: 9806
-  Time: 75, State: 10098
+  Time: 71, State: 1
+  Time: 72, State: 0
+  Time: 73, State: 0
+  Time: 74, State: 1
   Time: 75, State: 0
-  Time: 76, State: 10353
   Time: 76, State: 1
   Time: 77, State: 1
-  Time: 77, State: 10640
-  Time: 78, State: 10929
-  Time: 78, State: 3
-  Time: 79, State: 11201
-  Time: 79, State: 3
-  Time: 80, State: 2
-  Time: 80, State: 11467
-  Time: 81, State: 11810
-  Time: 81, State: 1
-  Time: 82, State: 12120
-  Time: 82, State: 0
+  Time: 78, State: 2
+  Time: 79, State: 0
+  Time: 80, State: 0
+  Time: 81, State: 2
+  Time: 82, State: 1
   Time: 83, State: 1
-  Time: 83, State: 12421
-  Time: 84, State: 2
-  Time: 84, State: 12710
-  Time: 85, State: 13022
-  Time: 85, State: 0
+  Time: 84, State: 0
+  Time: 85, State: 2
   Time: 86, State: 0
-  Time: 86, State: 13353
   Time: 87, State: 0
-  Time: 87, State: 13701
-  Time: 88, State: 14064
-  Time: 88, State: 0
-  Time: 89, State: 1
-  Time: 89, State: 14387
-  Time: 90, State: 14715
+  Time: 88, State: 3
+  Time: 89, State: 0
   Time: 90, State: 0
-  Time: 91, State: 15048
-  Time: 91, State: 2
+  Time: 91, State: 1
   Time: 92, State: 1
-  Time: 92, State: 15409
-  Time: 93, State: 15734
-  Time: 93, State: 2
-  Time: 94, State: 0
-  Time: 94, State: 16125
-  Time: 95, State: 16513
-  Time: 95, State: 1
+  Time: 93, State: 3
+  Time: 94, State: 1
+  Time: 95, State: 3
   Time: 96, State: 0
-  Time: 96, State: 16883
-  Time: 97, State: 17282
   Time: 97, State: 0
   Time: 98, State: 0
-  Time: 98, State: 17608
-  Time: 99, State: 17963
-  Time: 99, State: 1
-  Time: 100, State: 18336
-  Time: 100, State: 0
+  Time: 99, State: 0
+  Time: 100, State: 1

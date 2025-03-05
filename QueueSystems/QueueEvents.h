@@ -27,5 +27,30 @@ public:
     }
 };
 
+// ExternalArrivalEvent triggers the normal external arrival behavior.
+class ExternalArrivalEvent : public Event {
+public:
+    QueueModel* queue;
+    ExternalArrivalEvent(double time, QueueModel* q) : Event(time), queue(q) {}
+
+    virtual void process(Simulation& sim) override {
+        // Process the arrival as external, so schedule the next external arrival.
+        // Cast to MM1Queue to access the new handleArrival(bool) method.
+        dynamic_cast<MM1Queue*>(queue)->handleArrival(sim, true);
+    }
+};
+
+// RoutedArrivalEvent processes an arrival that is routed from another node.
+// It does not schedule a new external arrival.
+class RoutedArrivalEvent : public Event {
+public:
+    QueueModel* queue;
+    RoutedArrivalEvent(double time, QueueModel* q) : Event(time), queue(q) {}
+
+    virtual void process(Simulation& sim) override {
+        dynamic_cast<MM1Queue*>(queue)->handleArrival(sim, false);
+    }
+};
+
 #endif // QUEUEEVENTS_H
 

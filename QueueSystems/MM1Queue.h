@@ -20,7 +20,11 @@ public:
     void start();
 
     // Overrides from QueueModel.
-    virtual void handleArrival(Simulation& sim) override;
+    void handleArrival(Simulation& sim, bool isExternal);
+	// External by default.
+    virtual void handleArrival(Simulation& sim) override {
+        handleArrival(sim, true);
+    };
     virtual void handleDeparture(Simulation& sim) override;
 
     // Expose the state (number of customers in the system) for observers.
