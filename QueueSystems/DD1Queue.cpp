@@ -11,7 +11,7 @@ DD1Queue::DD1Queue(Simulation& sim, double interarrivalTime, double serviceTime)
 // Schedule the first arrival event.
 void DD1Queue::start() {
     double firstArrivalTime = sim.getCurrentTime() + interarrivalTime;
-    sim.scheduleEvent(std::make_shared<GenericArrivalEvent>(firstArrivalTime, this));
+    sim.scheduleEvent(std::make_shared<ExternalArrivalEvent>(firstArrivalTime, this));
 }
 
 // Update time-weighted metrics.
@@ -21,25 +21,33 @@ void DD1Queue::updateMetrics(double currentTime) {
     lastEventTime = currentTime;
 }
 
-// Process an arrival event.
-void DD1Queue::handleArrival(Simulation& sim) {
-    double currentTime = sim.getCurrentTime();
-    updateMetrics(currentTime);
-    totalArrivals++;
-    numInSystem++;
+void DD1Queue::handleExternalArrival(Simulation& sim)
+{
+	double currentTime = sim.getCurrentTime();
+	updateMetrics(currentTime);
+	totalArrivals++;
+	numInSystem++;
+	// Schedule the next external arrival.
+	double nextArrivalTime = currentTime + interarrivalTime;
+	sim.scheduleEvent(std::make_shared<ExternalArrivalEvent>(nextArrivalTime, this));
+	// If server was idle, schedule a departure.
+	if (numInSystem == 1) {
+		double departureTime = currentTime + serviceTime;
+		sim.scheduleEvent(std::make_shared<GenericDepartureEvent>(departureTime, this));
+	}
+}
 
-    // Notify observers (StateLogger) of the queue state change
-    notifyObservers(currentTime);
-
-    // Schedule the next arrival.
-    double nextArrivalTime = currentTime + interarrivalTime;
-    sim.scheduleEvent(std::make_shared<GenericArrivalEvent>(nextArrivalTime, this));
-
-    // If the server is idle, immediately schedule a departure.
-    if (numInSystem == 1) {
-        double departureTime = currentTime + serviceTime;
-        sim.scheduleEvent(std::make_shared<GenericDepartureEvent>(departureTime, this));
-    }
+void DD1Queue::handleInternalArrival(Simulation& sim)
+{
+	double currentTime = sim.getCurrentTime();
+	updateMetrics(currentTime);
+	totalArrivals++;
+	numInSystem++;
+	// Note: Do not schedule the next external arrival.
+	if (numInSystem == 1) {
+		double departureTime = currentTime + serviceTime;
+		sim.scheduleEvent(std::make_shared<GenericDepartureEvent>(departureTime, this));
+	}
 }
 
 // Process a departure event.

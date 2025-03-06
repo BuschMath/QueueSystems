@@ -3,20 +3,30 @@
 
 #include "Simulation.h"
 #include "QueueModel.h"
-#include <memory>
 
-// Generic Arrival Event that calls the handleArrival method.
-class GenericArrivalEvent : public Event {
+// ExternalArrivalEvent triggers an external arrival.
+class ExternalArrivalEvent : public Event {
 public:
     QueueModel* queue;
-    GenericArrivalEvent(double time, QueueModel* q) : Event(time), queue(q) {}
+    ExternalArrivalEvent(double time, QueueModel* q) : Event(time), queue(q) {}
 
     virtual void process(Simulation& sim) override {
-        queue->handleArrival(sim);
+        queue->handleExternalArrival(sim);
     }
 };
 
-// Generic Departure Event that calls the handleDeparture method.
+// InternalArrivalEvent triggers an internal (routed) arrival.
+class InternalArrivalEvent : public Event {
+public:
+    QueueModel* queue;
+    InternalArrivalEvent(double time, QueueModel* q) : Event(time), queue(q) {}
+
+    virtual void process(Simulation& sim) override {
+        queue->handleInternalArrival(sim);
+    }
+};
+
+// Departure event remains unchanged.
 class GenericDepartureEvent : public Event {
 public:
     QueueModel* queue;
@@ -27,30 +37,4 @@ public:
     }
 };
 
-// ExternalArrivalEvent triggers the normal external arrival behavior.
-class ExternalArrivalEvent : public Event {
-public:
-    QueueModel* queue;
-    ExternalArrivalEvent(double time, QueueModel* q) : Event(time), queue(q) {}
-
-    virtual void process(Simulation& sim) override {
-        // Process the arrival as external, so schedule the next external arrival.
-        // Cast to MM1Queue to access the new handleArrival(bool) method.
-        dynamic_cast<MM1Queue*>(queue)->handleArrival(sim, true);
-    }
-};
-
-// RoutedArrivalEvent processes an arrival that is routed from another node.
-// It does not schedule a new external arrival.
-class RoutedArrivalEvent : public Event {
-public:
-    QueueModel* queue;
-    RoutedArrivalEvent(double time, QueueModel* q) : Event(time), queue(q) {}
-
-    virtual void process(Simulation& sim) override {
-        dynamic_cast<MM1Queue*>(queue)->handleArrival(sim, false);
-    }
-};
-
 #endif // QUEUEEVENTS_H
-

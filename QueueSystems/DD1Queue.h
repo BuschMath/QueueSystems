@@ -6,6 +6,8 @@
 #include "QueueEvents.h"
 #include "Observable.h"
 #include <memory>
+#include <optional>
+#include <limits>
 
 class DD1Queue : public QueueModel, public Observable {
 public:
@@ -16,7 +18,8 @@ public:
     void start();
 
     // Process arrivals and departures.
-    virtual void handleArrival(Simulation& sim) override;
+    virtual void handleExternalArrival(Simulation& sim) override;
+    virtual void handleInternalArrival(Simulation& sim) override;
     virtual void handleDeparture(Simulation& sim) override;
 
     // Expose the state for observers.

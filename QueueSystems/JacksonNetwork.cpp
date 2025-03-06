@@ -82,7 +82,6 @@ void JacksonNetwork::routeCustomer(int fromNodeId, double currentTime) {
     int destination = -1;
     std::uniform_real_distribution<double> dist(0.0, 1.0);
     double r = dist(rng);
-
     for (size_t j = 0; j < row.size(); j++) {
         cumulative += row[j];
         if (r < cumulative) {
@@ -90,10 +89,9 @@ void JacksonNetwork::routeCustomer(int fromNodeId, double currentTime) {
             break;
         }
     }
-
-    // If destination is valid, schedule a routed arrival event.
     if (destination >= 0 && destination < nodes.size()) {
-        sim.scheduleEvent(std::make_shared<RoutedArrivalEvent>(currentTime, nodes[destination]));
+        // Schedule an internal arrival.
+        sim.scheduleEvent(std::make_shared<InternalArrivalEvent>(currentTime + epsilon, nodes[destination]));
     }
 }
 

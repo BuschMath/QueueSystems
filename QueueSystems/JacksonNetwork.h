@@ -10,6 +10,8 @@
 #include <random>
 #include <memory>
 
+const double epsilon = 0.01;
+
 // Forward declaration
 class JacksonNetwork;
 

@@ -8,21 +8,24 @@
 #include <random>
 #include <vector>
 #include <memory>
+#include <optional>
+#include <limits>
 
 // MMSQueue implements an M/M/s queue model.
 class MMSQueue : public QueueModel, public Observable {
 public:
-    // Constructor: takes the simulation engine, arrival and service rates, and the number of servers.
+    // Constructor: takes the simulation engine, arrival rate, service rate, and number of servers.
     MMSQueue(Simulation& sim, double arrivalRate, double serviceRate, int servers);
 
-    // Start the simulation by scheduling the first arrival event.
+    // Start the simulation by scheduling the first external arrival.
     void start();
 
-    // Overrides from QueueModel.
-    virtual void handleArrival(Simulation& sim) override;
+    // New interface for arrivals:
+    virtual void handleExternalArrival(Simulation& sim) override;
+    virtual void handleInternalArrival(Simulation& sim) override;
     virtual void handleDeparture(Simulation& sim) override;
 
-    // Expose the state (number of customers in the system) for observers.
+    // Expose the state (number in the system) for observers.
     virtual int getState() const override { return numInSystem; }
 
     // Accessors for simulation metrics.
@@ -30,29 +33,32 @@ public:
     int getTotalArrivals() const;
     int getTotalDepartures() const;
 
+    // Helper for obtaining the next interarrival time.
+    double getNextInterarrivalTime();
+
 private:
     Simulation& sim;
-    double lambda;  // Arrival rate
-    double mu;      // Service rate
-    int servers;    // Number of servers in the system
+    double lambda;  // External arrival rate.
+    double mu;      // Service rate.
+    int servers;    // Number of servers.
 
-    int numInSystem;  // Total number of customers (both in service and waiting)
-    int busyServers;  // Number of servers currently busy
+    int numInSystem;  // Total customers (in service + waiting).
+    int busyServers;  // Servers currently busy.
 
-    // Random number generators for exponential interarrival and service times.
+    // Random number generators.
     std::default_random_engine rng;
-    std::exponential_distribution<double> arrivalDist;
+    // Use std::optional so that we only create an exponential distribution if lambda > 0.
+    std::optional<std::exponential_distribution<double>> arrivalDist;
     std::exponential_distribution<double> serviceDist;
 
-    // Metrics for statistics.
+    // Metrics.
     int totalArrivals;
     int totalDepartures;
     double cumulativeTimeWeightedCustomers;
     double lastEventTime;
 
-    // Update the time-weighted customer metric.
+    // Helper to update the time-weighted metric.
     void updateMetrics(double currentTime);
 };
 
 #endif // MMSQUEUE_H
-
