@@ -1,162 +1,161 @@
-Jackson Network Simulation Results
-----------------------------------
+Jackson Network Simulation Results (3 Nodes)
+----------------------------------------------
 Simulation Time: 100
 
-Theoretical Metrics:
-  Node 0 effective arrival rate: ~5.32 per time unit
-  Node 0 average number in system: ~1.14
-  Node 1 effective arrival rate: ~1.60 per time unit
-  Node 1 average number in system: ~0.30
-
 Node 0 (MM1Queue) Simulation Metrics:
-  Total Arrivals: 520
-  Total Departures: 520
-  Average Number in System: 1.038
+  Total Arrivals: 476
+  Total Departures: 474
+  Average Number in System: 1.40442
 
-Node 1 (MM1Queue) Simulation Metrics:
-  Total Arrivals: 160
-  Total Departures: 160
-  Average Number in System: 0.255491
+Node 1 (MMSQueue) Simulation Metrics:
+  Total Arrivals: 230
+  Total Departures: 230
+  Average Number in System: 0.261488
+
+Node 2 (MM1Queue) Simulation Metrics:
+  Total Arrivals: 122
+  Total Departures: 122
+  Average Number in System: 0.233583
 
 Measurement Log for Node 0:
   Time: 0, State: 0
   Time: 1, State: 0
-  Time: 2, State: 0
+  Time: 2, State: 2
   Time: 3, State: 0
-  Time: 4, State: 1
-  Time: 5, State: 0
+  Time: 4, State: 0
+  Time: 5, State: 1
   Time: 6, State: 1
-  Time: 7, State: 3
-  Time: 8, State: 0
-  Time: 9, State: 0
-  Time: 10, State: 0
-  Time: 11, State: 0
-  Time: 12, State: 1
-  Time: 13, State: 1
-  Time: 14, State: 7
-  Time: 15, State: 5
-  Time: 16, State: 4
-  Time: 17, State: 1
-  Time: 18, State: 4
+  Time: 7, State: 2
+  Time: 8, State: 1
+  Time: 9, State: 5
+  Time: 10, State: 2
+  Time: 11, State: 2
+  Time: 12, State: 0
+  Time: 13, State: 0
+  Time: 14, State: 3
+  Time: 15, State: 3
+  Time: 16, State: 2
+  Time: 17, State: 3
+  Time: 18, State: 0
   Time: 19, State: 0
-  Time: 20, State: 6
-  Time: 21, State: 3
-  Time: 22, State: 0
-  Time: 23, State: 1
+  Time: 20, State: 0
+  Time: 21, State: 0
+  Time: 22, State: 1
+  Time: 23, State: 0
   Time: 24, State: 3
-  Time: 25, State: 2
-  Time: 26, State: 0
-  Time: 27, State: 3
-  Time: 28, State: 0
-  Time: 29, State: 0
-  Time: 30, State: 2
+  Time: 25, State: 5
+  Time: 26, State: 3
+  Time: 27, State: 1
+  Time: 28, State: 3
+  Time: 29, State: 7
+  Time: 30, State: 1
   Time: 31, State: 2
-  Time: 32, State: 2
-  Time: 33, State: 1
-  Time: 34, State: 0
-  Time: 35, State: 0
-  Time: 36, State: 2
+  Time: 32, State: 3
+  Time: 33, State: 2
+  Time: 34, State: 1
+  Time: 35, State: 4
+  Time: 36, State: 1
   Time: 37, State: 1
-  Time: 38, State: 0
-  Time: 39, State: 5
+  Time: 38, State: 3
+  Time: 39, State: 0
   Time: 40, State: 0
-  Time: 41, State: 0
-  Time: 42, State: 2
+  Time: 41, State: 2
+  Time: 42, State: 3
   Time: 43, State: 0
-  Time: 44, State: 1
+  Time: 44, State: 5
   Time: 45, State: 0
-  Time: 46, State: 0
+  Time: 46, State: 1
   Time: 47, State: 1
   Time: 48, State: 0
   Time: 49, State: 0
   Time: 50, State: 0
-  Time: 51, State: 4
-  Time: 52, State: 5
-  Time: 53, State: 1
-  Time: 54, State: 1
-  Time: 55, State: 0
-  Time: 56, State: 1
+  Time: 51, State: 0
+  Time: 52, State: 0
+  Time: 53, State: 5
+  Time: 54, State: 0
+  Time: 55, State: 2
+  Time: 56, State: 0
   Time: 57, State: 1
-  Time: 58, State: 1
-  Time: 59, State: 1
-  Time: 60, State: 0
-  Time: 61, State: 1
-  Time: 62, State: 3
-  Time: 63, State: 1
-  Time: 64, State: 3
-  Time: 65, State: 3
+  Time: 58, State: 3
+  Time: 59, State: 0
+  Time: 60, State: 4
+  Time: 61, State: 0
+  Time: 62, State: 0
+  Time: 63, State: 3
+  Time: 64, State: 7
+  Time: 65, State: 2
   Time: 66, State: 0
   Time: 67, State: 0
-  Time: 68, State: 0
-  Time: 69, State: 1
-  Time: 70, State: 1
-  Time: 71, State: 0
+  Time: 68, State: 2
+  Time: 69, State: 0
+  Time: 70, State: 0
+  Time: 71, State: 2
   Time: 72, State: 0
-  Time: 73, State: 1
-  Time: 74, State: 1
-  Time: 75, State: 3
-  Time: 76, State: 0
-  Time: 77, State: 0
-  Time: 78, State: 0
-  Time: 79, State: 1
-  Time: 80, State: 0
-  Time: 81, State: 2
-  Time: 82, State: 0
+  Time: 73, State: 0
+  Time: 74, State: 2
+  Time: 75, State: 5
+  Time: 76, State: 2
+  Time: 77, State: 1
+  Time: 78, State: 2
+  Time: 79, State: 3
+  Time: 80, State: 1
+  Time: 81, State: 1
+  Time: 82, State: 1
   Time: 83, State: 0
   Time: 84, State: 0
   Time: 85, State: 1
-  Time: 86, State: 0
-  Time: 87, State: 1
-  Time: 88, State: 0
+  Time: 86, State: 2
+  Time: 87, State: 2
+  Time: 88, State: 4
   Time: 89, State: 0
   Time: 90, State: 0
   Time: 91, State: 0
-  Time: 92, State: 2
-  Time: 93, State: 1
-  Time: 94, State: 0
+  Time: 92, State: 3
+  Time: 93, State: 4
+  Time: 94, State: 4
   Time: 95, State: 0
-  Time: 96, State: 1
-  Time: 97, State: 0
-  Time: 98, State: 3
+  Time: 96, State: 0
+  Time: 97, State: 2
+  Time: 98, State: 0
   Time: 99, State: 0
-  Time: 100, State: 0
+  Time: 100, State: 2
 
 Measurement Log for Node 1:
   Time: 0, State: 0
-  Time: 1, State: 0
+  Time: 1, State: 3
   Time: 2, State: 0
-  Time: 3, State: 1
-  Time: 4, State: 0
+  Time: 3, State: 0
+  Time: 4, State: 2
   Time: 5, State: 0
-  Time: 6, State: 0
+  Time: 6, State: 1
   Time: 7, State: 0
-  Time: 8, State: 0
+  Time: 8, State: 1
   Time: 9, State: 0
   Time: 10, State: 0
   Time: 11, State: 0
   Time: 12, State: 0
   Time: 13, State: 1
   Time: 14, State: 0
-  Time: 15, State: 3
-  Time: 16, State: 1
+  Time: 15, State: 1
+  Time: 16, State: 0
   Time: 17, State: 0
   Time: 18, State: 0
-  Time: 19, State: 3
+  Time: 19, State: 0
   Time: 20, State: 0
   Time: 21, State: 0
   Time: 22, State: 0
   Time: 23, State: 0
   Time: 24, State: 0
-  Time: 25, State: 1
-  Time: 26, State: 0
-  Time: 27, State: 0
-  Time: 28, State: 0
+  Time: 25, State: 0
+  Time: 26, State: 2
+  Time: 27, State: 1
+  Time: 28, State: 1
   Time: 29, State: 0
   Time: 30, State: 0
   Time: 31, State: 0
   Time: 32, State: 0
   Time: 33, State: 0
-  Time: 34, State: 0
+  Time: 34, State: 1
   Time: 35, State: 1
   Time: 36, State: 0
   Time: 37, State: 0
@@ -167,35 +166,138 @@ Measurement Log for Node 1:
   Time: 42, State: 0
   Time: 43, State: 0
   Time: 44, State: 0
-  Time: 45, State: 1
+  Time: 45, State: 0
   Time: 46, State: 0
   Time: 47, State: 0
   Time: 48, State: 0
-  Time: 49, State: 3
-  Time: 50, State: 0
+  Time: 49, State: 0
+  Time: 50, State: 1
   Time: 51, State: 0
   Time: 52, State: 0
   Time: 53, State: 0
   Time: 54, State: 0
   Time: 55, State: 0
   Time: 56, State: 0
+  Time: 57, State: 1
+  Time: 58, State: 0
+  Time: 59, State: 0
+  Time: 60, State: 0
+  Time: 61, State: 0
+  Time: 62, State: 1
+  Time: 63, State: 0
+  Time: 64, State: 0
+  Time: 65, State: 1
+  Time: 66, State: 0
+  Time: 67, State: 0
+  Time: 68, State: 1
+  Time: 69, State: 0
+  Time: 70, State: 0
+  Time: 71, State: 1
+  Time: 72, State: 0
+  Time: 73, State: 0
+  Time: 74, State: 0
+  Time: 75, State: 0
+  Time: 76, State: 0
+  Time: 77, State: 0
+  Time: 78, State: 0
+  Time: 79, State: 1
+  Time: 80, State: 0
+  Time: 81, State: 0
+  Time: 82, State: 0
+  Time: 83, State: 0
+  Time: 84, State: 1
+  Time: 85, State: 0
+  Time: 86, State: 0
+  Time: 87, State: 0
+  Time: 88, State: 0
+  Time: 89, State: 0
+  Time: 90, State: 0
+  Time: 91, State: 1
+  Time: 92, State: 0
+  Time: 93, State: 1
+  Time: 94, State: 0
+  Time: 95, State: 0
+  Time: 96, State: 1
+  Time: 97, State: 0
+  Time: 98, State: 0
+  Time: 99, State: 0
+  Time: 100, State: 0
+
+Measurement Log for Node 2:
+  Time: 0, State: 0
+  Time: 1, State: 0
+  Time: 2, State: 0
+  Time: 3, State: 0
+  Time: 4, State: 0
+  Time: 5, State: 1
+  Time: 6, State: 0
+  Time: 7, State: 0
+  Time: 8, State: 0
+  Time: 9, State: 2
+  Time: 10, State: 0
+  Time: 11, State: 0
+  Time: 12, State: 0
+  Time: 13, State: 0
+  Time: 14, State: 0
+  Time: 15, State: 1
+  Time: 16, State: 1
+  Time: 17, State: 0
+  Time: 18, State: 0
+  Time: 19, State: 1
+  Time: 20, State: 0
+  Time: 21, State: 0
+  Time: 22, State: 0
+  Time: 23, State: 0
+  Time: 24, State: 0
+  Time: 25, State: 0
+  Time: 26, State: 0
+  Time: 27, State: 0
+  Time: 28, State: 0
+  Time: 29, State: 0
+  Time: 30, State: 1
+  Time: 31, State: 1
+  Time: 32, State: 0
+  Time: 33, State: 0
+  Time: 34, State: 1
+  Time: 35, State: 0
+  Time: 36, State: 0
+  Time: 37, State: 0
+  Time: 38, State: 0
+  Time: 39, State: 0
+  Time: 40, State: 0
+  Time: 41, State: 1
+  Time: 42, State: 0
+  Time: 43, State: 0
+  Time: 44, State: 0
+  Time: 45, State: 0
+  Time: 46, State: 0
+  Time: 47, State: 0
+  Time: 48, State: 1
+  Time: 49, State: 0
+  Time: 50, State: 0
+  Time: 51, State: 0
+  Time: 52, State: 0
+  Time: 53, State: 0
+  Time: 54, State: 1
+  Time: 55, State: 0
+  Time: 56, State: 0
   Time: 57, State: 0
   Time: 58, State: 0
   Time: 59, State: 0
-  Time: 60, State: 1
+  Time: 60, State: 0
   Time: 61, State: 0
-  Time: 62, State: 2
+  Time: 62, State: 0
   Time: 63, State: 0
   Time: 64, State: 0
   Time: 65, State: 0
-  Time: 66, State: 2
+  Time: 66, State: 0
   Time: 67, State: 0
-  Time: 68, State: 2
-  Time: 69, State: 0
+  Time: 68, State: 0
+  Time: 69, State: 1
   Time: 70, State: 0
-  Time: 71, State: 0
-  Time: 72, State: 1
-  Time: 73, State: 1
+  Time: 71, State: 1
+  Time: 72, State: 0
+  Time: 73, State: 0
   Time: 74, State: 0
   Time: 75, State: 0
   Time: 76, State: 0
@@ -203,23 +305,23 @@ Measurement Log for Node 1:
   Time: 78, State: 0
   Time: 79, State: 0
   Time: 80, State: 0
-  Time: 81, State: 0
+  Time: 81, State: 1
   Time: 82, State: 0
   Time: 83, State: 0
   Time: 84, State: 0
   Time: 85, State: 1
-  Time: 86, State: 0
+  Time: 86, State: 1
   Time: 87, State: 0
   Time: 88, State: 0
   Time: 89, State: 0
-  Time: 90, State: 0
-  Time: 91, State: 0
+  Time: 90, State: 1
+  Time: 91, State: 1
   Time: 92, State: 0
   Time: 93, State: 0
   Time: 94, State: 0
   Time: 95, State: 0
-  Time: 96, State: 1
+  Time: 96, State: 0
   Time: 97, State: 0
   Time: 98, State: 0
-  Time: 99, State: 0
+  Time: 99, State: 2
   Time: 100, State: 0

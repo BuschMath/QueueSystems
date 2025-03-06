@@ -16,53 +16,46 @@ int main() {
     JacksonNetwork network(sim);
 
     // Add nodes:
-    // Node 0: M/M/1 queue with an external arrival rate of 5 and service rate of 10.
-    int node0 = network.addMM1Queue(5, 10);
-    // Node 1: M/M/1 queue with no external arrivals and service rate of 7.
-    int node1 = network.addMM1Queue(0, 7);
+    // Node 0: MM1Queue with external arrival rate 4 and service rate 8.
+    int node0 = network.addMM1Queue(4, 8);
+    // Node 1: MMSQueue with external arrival rate 1, service rate 10, and 2 servers.
+    int node1 = network.addMMSQueue(1, 10, 2);
+    // Node 2: MM1Queue with external arrival rate 0 and service rate 6.
+    int node2 = network.addMM1Queue(0, 6);
 
-    // Define the routing matrix:
-    // From Node 0: 30% of departures are routed to Node 1 (70% exit the network).
-    // From Node 1: 20% of departures are routed to Node 0 (80% exit the network).
+    // Define routing matrix (3x3):
+    // Row i represents the routing probabilities from Node i to Nodes 0, 1, 2.
+    // The remaining probability in each row is for departures exiting the network.
     std::vector<std::vector<double>> routing = {
-        { 0.0, 0.3 },
-        { 0.2, 0.0 }
+        { 0.0, 0.2, 0.1 }, // From Node 0: 20% to Node 1, 10% to Node 2, 70% exit.
+        { 0.2, 0.0, 0.3 }, // From Node 1: 20% to Node 0, 30% to Node 2, 50% exit.
+        { 0.1, 0.2, 0.0 }  // From Node 2: 10% to Node 0, 20% to Node 1, 70% exit.
     };
     network.setRoutingMatrix(routing);
 
     // Create StateLoggers for each node.
-    StateLogger logger0, logger1;
+    StateLogger logger0, logger1, logger2;
     if (auto n0 = network.getNode(node0))
         dynamic_cast<Observable*>(n0)->attach(&logger0);
     if (auto n1 = network.getNode(node1))
         dynamic_cast<Observable*>(n1)->attach(&logger1);
+    if (auto n2 = network.getNode(node2))
+        dynamic_cast<Observable*>(n2)->attach(&logger2);
 
-    // Schedule measurement events on each node (sampling every 1.0 time unit).
-    if (auto obs0 = dynamic_cast<Observable*>(network.getNode(node0))) {
+    // Schedule measurement events on each node (sample every 1 time unit).
+    if (auto obs0 = dynamic_cast<Observable*>(network.getNode(node0)))
         sim.scheduleEvent(std::make_shared<MeasurementEvent>(0.0, obs0, 1.0));
-    }
-    if (auto obs1 = dynamic_cast<Observable*>(network.getNode(node1))) {
+    if (auto obs1 = dynamic_cast<Observable*>(network.getNode(node1)))
         sim.scheduleEvent(std::make_shared<MeasurementEvent>(0.0, obs1, 1.0));
-    }
+    if (auto obs2 = dynamic_cast<Observable*>(network.getNode(node2)))
+        sim.scheduleEvent(std::make_shared<MeasurementEvent>(0.0, obs2, 1.0));
 
-    // Start the network (schedules the first external arrival for each node, if applicable).
+    // Start the network (each node schedules its first external arrival if applicable).
     network.start();
 
     // Run the simulation until time 100.
     double simulationTime = 100.0;
     sim.run(simulationTime);
-
-    // For theoretical analysis:
-    // The effective arrival rates satisfy:
-    //   Λ0 = 5 + 0.2 * Λ1, and Λ1 = 0.3 * Λ0.
-    // Solving gives Λ0 ≈ 5.3191 and Λ1 ≈ 1.5957.
-    // Then, for an M/M/1 queue, L = ρ / (1-ρ) with ρ = Λ/μ.
-    // Node 0: ρ0 = 5.3191/10 ≈ 0.53191, so L0 ≈ 1.137.
-    // Node 1: ρ1 = 1.5957/7 ≈ 0.22796, so L1 ≈ 0.295.
-
-    // Downcast to access metrics from the JacksonMM1Queue objects.
-    auto node0Ptr = dynamic_cast<JacksonMM1Queue*>(network.getNode(node0));
-    auto node1Ptr = dynamic_cast<JacksonMM1Queue*>(network.getNode(node1));
 
     // Open output file.
     std::ofstream outFile("output.txt");
@@ -71,18 +64,14 @@ int main() {
         return 1;
     }
 
-    outFile << "Jackson Network Simulation Results\n";
-    outFile << "----------------------------------\n";
+    outFile << "Jackson Network Simulation Results (3 Nodes)\n";
+    outFile << "----------------------------------------------\n";
     outFile << "Simulation Time: " << simulationTime << "\n\n";
 
-    // Theoretical Metrics.
-    outFile << "Theoretical Metrics:\n";
-    outFile << "  Node 0 effective arrival rate: ~5.32 per time unit\n";
-    outFile << "  Node 0 average number in system: ~1.14\n";
-    outFile << "  Node 1 effective arrival rate: ~1.60 per time unit\n";
-    outFile << "  Node 1 average number in system: ~0.30\n\n";
+    // Retrieve and print metrics for each node.
 
-    // Simulated Metrics for Node 0.
+    // Node 0 metrics (MM1Queue).
+    auto node0Ptr = dynamic_cast<JacksonMM1Queue*>(network.getNode(node0));
     if (node0Ptr) {
         outFile << "Node 0 (MM1Queue) Simulation Metrics:\n";
         outFile << "  Total Arrivals: " << node0Ptr->getTotalArrivals() << "\n";
@@ -93,9 +82,10 @@ int main() {
         outFile << "Error retrieving metrics for Node 0.\n\n";
     }
 
-    // Simulated Metrics for Node 1.
+    // Node 1 metrics (MMSQueue).
+    auto node1Ptr = dynamic_cast<JacksonMMSQueue*>(network.getNode(node1));
     if (node1Ptr) {
-        outFile << "Node 1 (MM1Queue) Simulation Metrics:\n";
+        outFile << "Node 1 (MMSQueue) Simulation Metrics:\n";
         outFile << "  Total Arrivals: " << node1Ptr->getTotalArrivals() << "\n";
         outFile << "  Total Departures: " << node1Ptr->getTotalDepartures() << "\n";
         outFile << "  Average Number in System: " << node1Ptr->getAverageNumberInSystem() << "\n\n";
@@ -104,16 +94,31 @@ int main() {
         outFile << "Error retrieving metrics for Node 1.\n\n";
     }
 
+    // Node 2 metrics (MM1Queue).
+    auto node2Ptr = dynamic_cast<JacksonMM1Queue*>(network.getNode(node2));
+    if (node2Ptr) {
+        outFile << "Node 2 (MM1Queue) Simulation Metrics:\n";
+        outFile << "  Total Arrivals: " << node2Ptr->getTotalArrivals() << "\n";
+        outFile << "  Total Departures: " << node2Ptr->getTotalDepartures() << "\n";
+        outFile << "  Average Number in System: " << node2Ptr->getAverageNumberInSystem() << "\n\n";
+    }
+    else {
+        outFile << "Error retrieving metrics for Node 2.\n\n";
+    }
+
     // Write measurement logs.
     outFile << "Measurement Log for Node 0:\n";
-    const auto& log0 = logger0.getLog();
-    for (const auto& entry : log0) {
+    for (const auto& entry : logger0.getLog()) {
         outFile << "  Time: " << entry.time << ", State: " << entry.state << "\n";
     }
 
     outFile << "\nMeasurement Log for Node 1:\n";
-    const auto& log1 = logger1.getLog();
-    for (const auto& entry : log1) {
+    for (const auto& entry : logger1.getLog()) {
+        outFile << "  Time: " << entry.time << ", State: " << entry.state << "\n";
+    }
+
+    outFile << "\nMeasurement Log for Node 2:\n";
+    for (const auto& entry : logger2.getLog()) {
         outFile << "  Time: " << entry.time << ", State: " << entry.state << "\n";
     }
 
