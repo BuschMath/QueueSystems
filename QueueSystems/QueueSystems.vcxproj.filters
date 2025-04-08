@@ -48,6 +48,9 @@
     <ClInclude Include="JacksonNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CANQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MM1Queue.cpp">
@@ -63,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="JacksonNetwork.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CANQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

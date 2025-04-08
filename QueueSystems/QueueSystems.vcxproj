@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CANQueue.h" />
     <ClInclude Include="DD1Queue.h" />
     <ClInclude Include="JacksonNetwork.h" />
     <ClInclude Include="MeasurementEvent.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="StateObserver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CANQueue.cpp" />
     <ClCompile Include="DD1Queue.cpp" />
     <ClCompile Include="JacksonNetwork.cpp" />
     <ClCompile Include="MM1Queue.cpp" />

@@ -36,7 +36,7 @@ public:
     // Helper for obtaining the next interarrival time.
     double getNextInterarrivalTime();
 
-private:
+protected:
     Simulation& sim;
     double lambda;  // External arrival rate.
     double mu;      // Service rate.
